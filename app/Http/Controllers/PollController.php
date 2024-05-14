@@ -12,11 +12,8 @@ class PollController extends Controller
 {
     public function index()
     {
-        $data = [
-            'polls' => Poll::with('options')->latest()
-        ];
-        // $polls = Poll::with('options')->get();
-        return view('admin.upload', $data);
+        $polls = Poll::with('options')->get();
+        return view('admin.upload', compact('polls'));
     }
 
     public function showPoll()

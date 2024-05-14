@@ -78,9 +78,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($polls as $poll)
+                                {{-- @forelse ($polls as $key => $poll)
                                     <tr>
-                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td class="text-center">{{ $key + $poll->firstItem() }}</td>
                                         <td>{{ $poll->question }}</td>
                                         <td>
                                             @foreach ($poll->options as $option)
@@ -96,7 +96,7 @@
                                     <tr>
                                         <td class="text-center text-muted" colspan="4">Data Polling tidak tersedia</td>
                                     </tr>
-                                @endforelse
+                                @endforelse --}}
                             </tbody>
                         </table>
                     </div>
