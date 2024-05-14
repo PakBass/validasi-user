@@ -18,7 +18,7 @@ class PollController extends Controller
 
     public function showPoll()
     {
-        $poll = Poll::with('options')->latest()->first();
+        $poll = Poll::with('options.votes')->latest()->first();
         $userVote = null;
 
         if ($poll && Auth::check()) {
@@ -27,7 +27,17 @@ class PollController extends Controller
                 ->first();
         }
 
-        return view('poll.show', compact('poll', 'userVote'));
+        // Calculate total votes
+        $totalVotes = $poll->options->sum(function ($option) {
+            return $option->votes->count();
+        });
+
+        // Calculate percentage for each option
+        foreach ($poll->options as $option) {
+            $option->percentage = $totalVotes > 0 ? ($option->votes->count() / $totalVotes) * 100 : 0;
+        }
+
+        return view('poll.show', compact('poll', 'userVote', 'totalVotes'));
     }
 
     public function vote(Request $request, Poll $poll)

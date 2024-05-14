@@ -7,38 +7,35 @@
                 <div class="card">
                     <div class="card-header">{{ __('Polling') }}</div>
                     <div class="card-body">
-                        <div class="container">
-                            @if (session('success'))
-                                <div class="alert alert-success">{{ session('success') }}</div>
-                            @endif
-
-                            @if (session('error'))
-                                <div class="alert alert-danger">{{ session('error') }}</div>
-                            @endif
-
-                            @if ($poll)
-                                <h2>{{ $poll->question }}</h2>
-                                
-                                @if ($userVote)
-                                    <p>Anda telah melakukan vote, pilihan anda :
-                                        <strong>{{ $userVote->option->name }}</strong></p>
-                                    <p>Terima kasih atas partisipasi anda!</p>
-                                @else
-                                    <form action="{{ route('poll.vote', $poll->id) }}" method="POST">
-                                        @csrf
-                                        @foreach ($poll->options as $option)
-                                            <label>
-                                                <input type="radio" name="option" value="{{ $option->id }}">
-                                                {{ $option->name }}
-                                            </label><br>
-                                        @endforeach
-                                        <button type="submit" class="btn btn-primary">Vote</button>
-                                    </form>
-                                @endif
+                        @if ($poll)
+                            <h2>{{ $poll->question }}</h2>
+                            @if ($userVote)
+                                <p>Anda telah melakukan vote, pilihan anda : <strong>{{ $userVote->option->name }}</strong>
+                                </p>
+                                <p>Terima kasih atas partisipasi anda!</p>
                             @else
-                                <p>Data Polling Tidak ada.</p>
+                                <form action="{{ route('poll.vote', $poll->id) }}" method="POST">
+                                    @csrf
+                                    @foreach ($poll->options as $option)
+                                        <label>
+                                            <input type="radio" name="option" value="{{ $option->id }}">
+                                            {{ $option->name }}
+                                        </label><br>
+                                    @endforeach
+                                    <button type="submit" class="btn btn-primary">Vote</button>
+                                </form>
                             @endif
-                        </div>
+
+                            <h3>Hasil Polling</h3>
+                            <ul>
+                                @foreach ($poll->options as $option)
+                                    <li>{{ $option->name }}: {{ number_format($option->percentage, 2) }}%
+                                        ({{ $option->votes->count() }} votes)</li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p>Data Polling tidak ditemukan.</p>
+                        @endif
                     </div>
                 </div>
             </div>
