@@ -3,6 +3,11 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
                 <div class="card">
                     <div class="card-header">{{ __('Login') }}</div>
                     <div class="card-body">
@@ -36,7 +41,7 @@
                                         <input id="password" type="password"
                                             class="form-control @error('password') is-invalid @enderror" name="password"
                                             placeholder="Password" autocomplete="current-password">
-                                            <label for="password">Password</label>
+                                        <label for="password">Password</label>
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -48,7 +53,7 @@
 
                             <div class="row mb-0">
                                 <div class="col-md-8">
-                                    <h6><i>Project USK &copy;2024</i></h6>
+                                    <h6><i>&copy;2024</i></h6>
                                 </div>
                             </div>
                         </form>

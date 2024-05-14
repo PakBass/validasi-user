@@ -19,9 +19,14 @@ class PollController extends Controller
     public function showPoll()
     {
         $poll = Poll::with('options.votes')->latest()->first();
-        $userVote = null;
 
-        if ($poll && Auth::check()) {
+        if (!$poll) {
+            // Jika tidak ada polling yang ditemukan, kembalikan tampilan dengan pesan error
+            return view('poll.show')->with('poll', null);
+        }
+
+        $userVote = null;
+        if (Auth::check()) {
             $userVote = Vote::where('poll_id', $poll->id)
                 ->where('user_id', Auth::id())
                 ->first();
