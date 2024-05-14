@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +32,6 @@ Route::group(['middleware' => 'auth'], function(){
     Route::middleware('role:admin')->get('/admin',[HomeController::class, 'admin'])->name('admin');
     Route::resource('/upload',ImageController::class)->middleware('auth');
     Route::resource('/admin',AdminController::class)->middleware('auth');
+    Route::resource('/ubahPassword', UserController::class);
+
 });
