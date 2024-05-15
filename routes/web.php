@@ -42,4 +42,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin/poll/create', [PollController::class, 'createPollForm'])->name('admin.poll.create');
     Route::post('/admin/poll', [PollController::class, 'storePoll'])->name('admin.poll.store');
     Route::get('/admin/polls', [PollController::class, 'TampilData']);
+
+    Route::delete('/admin/polls/{poll}', [ImageController::class, 'destroy'])->name('admin.polls.destroy');
 });

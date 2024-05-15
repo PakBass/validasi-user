@@ -59,8 +59,11 @@ class ImageController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Poll $poll)
     {
-        //
+        $poll->options()->delete();
+        $poll->delete();
+
+        return redirect()->route('admin.index')->with('success', 'Poll deleted successfully');
     }
 }
