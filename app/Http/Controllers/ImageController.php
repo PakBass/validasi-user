@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Poll;
 use Illuminate\Http\Request;
 
 class ImageController extends Controller
@@ -11,7 +12,8 @@ class ImageController extends Controller
      */
     public function index()
     {
-        return view('admin.upload');
+        $polls = Poll::with('options')->get();
+        return view('admin.upload', compact('polls'));
     }
 
     /**

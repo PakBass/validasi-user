@@ -22,7 +22,7 @@ class PollController extends Controller
 
         if (!$poll) {
             // Jika tidak ada polling yang ditemukan, kembalikan tampilan dengan pesan error
-            return view('poll.show')->with('poll', null);
+            return view('poll.show',compact('poll'))->with('poll', null);
         }
 
         $userVote = null;
